@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>สั่งซื้อชุดไหว้เทพ - สายมู 369</title>
+
+  <!-- ตั้งชื่อ/ไอคอนตอนกด "เพิ่มไปหน้าจอหลัก" บนมือถือ -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="สั่งของไหว้ 369">
+  <meta name="theme-color" content="#4a2c68">
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      background: #f9f7f4;
+      font-family: 'Sarabun', 'Tahoma', sans-serif;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .splash { text-align: center; color: #4a2c68; padding: 0 24px; }
+    .splash img {
+      width: 100px; height: 100px; border-radius: 22px;
+      box-shadow: 0 6px 20px rgba(74, 44, 104, 0.2);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .splash h1 { font-size: 19px; font-weight: 700; margin: 20px 0 8px; color: #4a2c68; }
+    .splash p { font-size: 14px; color: #777; margin: 0; }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: .85; }
+    }
+    
+    #manualArea { display: none; margin-top: 30px; }
+    #manualArea .hint {
+      font-size: 13px; color: #555; line-height: 1.6;
+      margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    #manualBtn {
+      display: inline-block;
+      background: linear-gradient(135deg, #4a2c68, #2a1542);
+      color: #fcf6e8; font-weight: 600; font-size: 15px;
+      padding: 14px 32px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(74, 44, 104, 0.3);
+      transition: transform 0.2s;
+    }
+    #manualBtn:active { transform: scale(0.96); }
+  </style>
+</head>
+<body>
+  <div class="splash">
+    <!-- แนะนำให้เซฟรูปไอคอนที่คุณออกแบบมาไว้ในชื่อ icon-512.png แล้วนำมาวางในโฟลเดอร์เดียวกัน -->
+    <img src="icon-512.png" alt="สายมู 369">
+    <h1>🙏 สั่งซื้อชุดไหว้เทพ</h1>
+    <p id="statusText">กำลังพาท่านเข้าสู่หน้าร้าน...</p>
+
+    <div id="manualArea">
+      <p class="hint">
+        <b>💡 แนะนำเพื่อความสะดวก:</b><br>
+        ให้กดปุ่มแชร์ (Share) ที่เบราว์เซอร์ แล้วเลือก <b>"เพิ่มไปยังหน้าจอโฮม" (Add to Home Screen)</b><br>
+        เพื่อให้ครั้งต่อไปกดสั่งซื้อผ่านไอคอนแอปได้ทันที
+      </p>
+      <a id="manualBtn" href="#">เข้าสู่หน้าร้านตอนนี้</a>
+    </div>
+  </div>
+
+  <script>
+    // ⚠️ นำลิงก์ Web App ของคุณ (ที่เติม ?page=order แล้ว) มาวางตรงนี้
+    var CUSTOMER_URL = 'https://script.google.com/macros/s/ใส่_ID_WEB_APP_ของคุณตรงนี้/exec?page=order';
+
+    function isStandalone() {
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+        || window.navigator.standalone === true; 
+    }
+
+    document.getElementById('manualBtn').href = CUSTOMER_URL;
+    document.getElementById('manualBtn').onclick = function () {
+      window.location.href = CUSTOMER_URL;
+    };
+
+    if (isStandalone()) {
+      // หากลูกค้าเปิดผ่านไอคอนบนมือถือ จะทำการสลับไปหน้าสั่งซื้อทันที
+      setTimeout(function () {
+        window.location.replace(CUSTOMER_URL);
+      }, 500);
+    } else {
+      // หากเปิดผ่านเบราว์เซอร์ปกติ จะหยุดอยู่ที่หน้านี้เพื่อให้ลูกค้ามีเวลาเซฟลงหน้าจอโฮม
+      document.getElementById('statusText').style.display = 'none';
+      document.getElementById('manualArea').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
